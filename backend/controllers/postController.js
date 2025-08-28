@@ -48,16 +48,42 @@ const createPost = async (req, res) => {
 // @route PUT /api/:id
 // @access public
 
-const editPost = (req, res) => {
-    res.status(201).json({message:`Edit post ${req.params.id}`});
+const editPost = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if(!product){
+            res.status(404);
+            throw new Error("Contact not found!");
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new: true}
+        );
+
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        
+    }
 };
 // @desc Delete Post
 // @route DELETE /api/:id
 // @access public
 
-const destroyPost = ((req, res) => {
-    res.status(201).json({message:`Delete post ${req.params.id}`});
-})
+const destroyPost = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if(!product){
+            res.status(404);
+            throw new Error("Contact not found!");
+        }
+        res.status(200).json({message: `Product: ${product} deleted`})
+        await Product.deleteOne({_id: req.params.id})
+    } catch (error) {
+        
+    }
+}
 
 
 module.exports = {
