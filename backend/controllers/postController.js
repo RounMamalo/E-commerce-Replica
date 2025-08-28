@@ -1,12 +1,14 @@
+const Product = require("../models/Product")
 // @desc Get ALL Posts
 // @route GET /api/
 // @access public
 
-const getPosts = (req, res) => {
+const getPosts = async (req, res) => {
     try {
-        
+        const products = await Product.find()
+        res.status(200).json(products)
     } catch (error) {
-        
+        res.status(500).message(error)
     }
     // res.status(200).json({message:"Get all posts"});
 }
@@ -14,20 +16,32 @@ const getPosts = (req, res) => {
 // @route GET /api/:id
 // @access public
 
-const getPost = (req, res) => {
-    res.status(200).json({message:`This is post ${req.params.id}`});
+const getPost = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(500).message(error)
+    }
 }
 // @desc Create Post
 // @route POST /api/
 // @access public
 
-const createPost = (req, res) => {
-    const {name, description, price, stock, category} = req.body;
-    if(!name|| !description || !price || !stock || !category){
-        res.status(400); 
-        throw new Error("All fields are required!");
+const createPost = async (req, res) => {
+    try {
+        const {name, description, price, stock, category} = req.body;
+        if(!name|| !description || !price || !stock || !category){
+            res.status(400); 
+            throw new Error("All fields are required!");
+        }
+        const product = await Product.create({
+            name, description, price, stock, category
+        })
+        res.status(201).json(product);
+    } catch (error) {
+        
     }
-    res.status(201).json({message:"Get all posts"})        
 }
 
 // @desc Edit Post
