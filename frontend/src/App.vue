@@ -9,6 +9,10 @@ import NavBar from "./components/NavBar.vue";
     <NavBar />
     <RouterView />
   </div>
+  <!-- <div class="main-screen min-h-full flex min-w-full">
+    <NavBar />
+    <RouterView />
+  </div> -->
 </template>
 
 <style scoped></style>
