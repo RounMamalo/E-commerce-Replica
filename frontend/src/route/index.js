@@ -4,6 +4,7 @@ import ProfileView from "@/views/ProfileView.vue";
 import FriendsView from "@/views/FriendsView.vue";
 import MessagesView from "@/views/MessagesView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
+import ProductView from "@/views/ProductView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,11 @@ const router = createRouter({
             path: '/',
             name: 'Home',
             component: HomeView
+        },
+        {
+            path: '/product/:id',
+            name: 'product',
+            component: ProductView
         },
         {
             path: '/profile', //add :id in the future
