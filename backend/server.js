@@ -15,6 +15,7 @@ app.listen(port, () => {
 }) //Setting up the server
 
 app.use("/product/", require("./routes/productRoutes"));
+app.use("/auth/", require("./routes/auth"));
 
 
 
