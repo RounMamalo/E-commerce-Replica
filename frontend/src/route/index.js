@@ -5,6 +5,8 @@ import FriendsView from "@/views/FriendsView.vue";
 import MessagesView from "@/views/MessagesView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import ProductView from "@/views/ProductView.vue";
+import EditView from "@/views/EditView.vue";
+import DashboardView from "@/views/DashboardView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +22,11 @@ const router = createRouter({
             component: ProductView
         },
         {
+            path: '/product/edit/:id',
+            name: 'edit-product',
+            component: EditView
+        },
+        {
             path: '/profile', //add :id in the future
             name: 'Profile',
             component: ProfileView
@@ -28,6 +35,11 @@ const router = createRouter({
             path: '/friends',
             name: 'Friends',
             component: FriendsView
+        },
+        {
+            path: '/dashboard',
+            name: 'Dashboard',
+            component: DashboardView
         },
         {
             path: '/messages',
