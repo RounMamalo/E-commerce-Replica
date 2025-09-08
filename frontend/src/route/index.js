@@ -7,6 +7,8 @@ import NotFoundView from "@/views/NotFoundView.vue";
 import ProductView from "@/views/ProductView.vue";
 import EditView from "@/views/EditView.vue";
 import DashboardView from "@/views/DashboardView.vue";
+import RegisterView from "@/views/RegisterView.vue";
+import LoginView from "@/views/LoginView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +27,16 @@ const router = createRouter({
             path: '/product/edit/:id',
             name: 'edit-product',
             component: EditView
+        },
+        {
+            path: '/register',
+            name: 'register-user',
+            component: RegisterView
+        },
+        {
+            path: '/login',
+            name: 'login-user',
+            component: LoginView
         },
         {
             path: '/profile', //add :id in the future
