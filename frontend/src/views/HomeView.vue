@@ -7,6 +7,7 @@ import Categories from '@/components/HomeViewSelections/Categories.vue';
 import Recommendations from '@/components/HomeViewSelections/Recommendations.vue';
 import Sale from '@/components/HomeViewSelections/Sale.vue';
 
+
 </script>
 <template>
     <div class="flex justify-center mt-5">

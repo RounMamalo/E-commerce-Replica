@@ -1,0 +1,9 @@
+<script setup>
+import LoginForm from "@/components/Authentication/LoginForm.vue";
+</script>
+
+<template>
+  <div class="flex justify-center items-center min-h-screen">
+    <LoginForm />
+  </div>
+</template>
