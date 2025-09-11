@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import ProfileView from "@/views/ProfileView.vue";
-import FriendsView from "@/views/FriendsView.vue";
-import MessagesView from "@/views/MessagesView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
-import ProductView from "@/views/ProductView.vue";
 import EditView from "@/views/EditView.vue";
 import DashboardView from "@/views/DashboardView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import LoginView from "@/views/LoginView.vue";
+//Products
+import ProductView from "@/views/Product/ProductView.vue";
+import AddProductView from "@/views/Product/AddProductView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +22,11 @@ const router = createRouter({
             path: '/product/:id',
             name: 'product',
             component: ProductView
+        },
+        {
+            path: '/product/add',
+            name: 'add-product',
+            component: AddProductView
         },
         {
             path: '/product/edit/:id',
@@ -44,19 +49,9 @@ const router = createRouter({
             component: ProfileView,
         },
         {
-            path: '/friends',
-            name: 'Friends',
-            component: FriendsView
-        },
-        {
             path: '/dashboard',
             name: 'Dashboard',
             component: DashboardView
-        },
-        {
-            path: '/messages',
-            name: 'Messages',
-            component: MessagesView
         },
         {
             path: '/:catchAll(.*)',

@@ -1,6 +1,6 @@
 <script setup>
-import PostForm from '@/components/PostForm.vue';
-import ProductCards from '@/components/ProductCards.vue';
+import PostForm from '@/components/Product/ProductForm.vue';
+import ProductCards from '@/components/Product/ProductCards.vue';
 import axios from 'axios';
 import { onMounted } from 'vue';
 import Categories from '@/components/HomeViewSelections/Categories.vue';

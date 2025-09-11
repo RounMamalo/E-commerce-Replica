@@ -61,6 +61,7 @@ export const useUserStore = defineStore('user',() => {
         account.value = null;
       }
     };
+    loadUser();
 
     const logOut = () => {
         localStorage.removeItem("token");
@@ -69,5 +70,19 @@ export const useUserStore = defineStore('user',() => {
         loadUser();
         router.push("/login");
     }
-  return { account, isLoggedIn, userLogin, loadUser, logOut }
+    const userProducts = ref([]);
+
+    const getUserProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/user/${account.value.id}`);
+        userProducts.value = response.data;
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching user products:", error.response?.data || error.message);
+        userProducts.value = [];
+        return [];
+      }
+    };
+
+  return { account, isLoggedIn, userLogin, loadUser, logOut, getUserProduct, userProducts }
 })
