@@ -2,6 +2,7 @@
 import { reactive, defineProps, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 import axios from "axios";
+import { useProductStore } from "@/stores/useProductStore";
 
 const product = reactive({
   id: "",
@@ -11,9 +12,11 @@ const product = reactive({
   stock: 0,
   price: 0,
 });
+
 const props = defineProps({
   product: Object,
 });
+
 onMounted(() => {
   product.id = props.product._id;
   product.name = props.product.name;
@@ -23,19 +26,7 @@ onMounted(() => {
   product.description = props.product.description;
 });
 
-const deleteProduct = async () => {
-  try {
-    const response = await axios.delete(
-      `http://localhost:3000/product/${product.id}`
-    );
 
-    if (response.status === 200) {
-      window.location.reload();
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
 </script>
 <template>
   <div class="bg-white p-2 h-fit">
