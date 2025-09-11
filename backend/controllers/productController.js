@@ -5,7 +5,7 @@ const Product = require("../models/Product")
 
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find()
+        const products = await Product.find().populate('sellerId', 'userName')
         res.status(200).json(products)
     } catch (error) {
         res.status(500).json(error)
@@ -24,23 +24,36 @@ const getProduct = async (req, res) => {
         res.status(500).json(error)
     }
 }
+// @desc Get SPECIFIC Product using a specific sellerId
+// @route GET /api/:id
+// @access public
+
+const getProductSellerId = async (req, res) => {
+  try {
+    const products = await Product.find({ sellerId: req.params.id })
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching products", error });
+  }
+};
+
 // @desc Create Post
-// @route POST /api/
+// @route POST /product/
 // @access public
 
 const createProduct = async (req, res) => {
     try {
-        const {name, description, price, stock, category} = req.body;
-        if(!name|| !description || !price || !stock || !category){
+        const {name, description, price, stock, category, sellerId} = req.body;
+        if(!name|| !description || !price || !stock || !category || !sellerId){
             res.status(400); 
             throw new Error("All fields are required!");
         }
         const product = await Product.create({
-            name, description, price, stock, category
+            name, description, price, stock, category, sellerId
         })
         res.status(201).json(product);
     } catch (error) {
-        
+        console.log(error)
     }
 }
 
@@ -88,6 +101,7 @@ const destroyProduct = async (req, res) => {
 module.exports = {
     getProducts,
     getProduct,
+    getProductSellerId,
     createProduct,
     editProduct,
     destroyProduct
