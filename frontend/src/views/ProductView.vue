@@ -1,42 +1,22 @@
 <script setup>
-import axios from "axios";
 import { useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
+import { useProductStore } from "@/stores/useProductStore";
 
 const route = useRoute();
+const store = useProductStore();
 const productId = route.params.id;
-const product = reactive({
-  id: "",
-  name: "",
-  description: "",
-  category: "",
-  stock: 0,
-  price: 0,
-});
 
-onMounted(async () => {
-  try {
-    const response = await axios.get(
-      `http://localhost:3000/product/${productId}`
-    );
-    const objectData = response.data;
-
-    product.name = objectData.name;
-    product.description = objectData.description;
-    product.category = objectData.category;
-    product.stock = objectData.stock;
-    product.price = objectData.price;
-  } catch (error) {
-    console.log(error);
-  }
+onMounted(() => {
+  store.getProduct(productId)
 });
 </script>
 
 <template>
-    {{ product.name }}
-    {{ product.category }}
-    {{ product.stock }}
-    {{ product.description }}
-    {{ product.price }}
+    {{ store.product.name }}
+    {{ store.product.category }}
+    {{ store.product.stock }}
+    {{ store.product.description }}
+    {{ store.product.price }}
 
 </template>

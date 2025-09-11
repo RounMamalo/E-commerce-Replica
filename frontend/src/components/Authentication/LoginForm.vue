@@ -2,40 +2,22 @@
 import { RouterLink } from "vue-router";
 import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
-import { useToast } from "vue-toastification";
-import router from "@/route";
-const toast = useToast();
+import { useUserStore } from "@/stores/useUserStore";
+
 const errorMessage = ref("")
-const account = reactive({
+const store = useUserStore();
+const currentAccount = reactive({
   email: "",
   password: "",
 });
 
-const login = async () => {
-  try {
-    const userAccount = {
-      email: account.email,
-      password: account.password,
-    };
-    const response = await axios.post(
-      "http://localhost:3000/auth/login",
-      userAccount
-    );
-    if (response.status === 200) {
-      toast.success(`Welcome ${response.data.user}`);
-      router.push("/");
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userName", response.data.user);
-    } else {
-        console.log(response.data.message)
-    }
-  } catch (error) {
-    if(error){
-        errorMessage.value = error.response.data.message
-    }
-    console.log(error.response.data.message);
+const handleLogin = async () => {
+  const result = await store.userLogin(currentAccount)
+  if (!result.success) {
+    errorMessage.value = result.message
   }
-};
+}
+
 </script>
 
 <template>
@@ -46,9 +28,9 @@ const login = async () => {
     <div
         class="bg-red-400 p-2 text-white my-2" v-if="errorMessage"
     >
-        {{  errorMessage }}
+        {{ errorMessage }}
     </div>
-    <form @submit.prevent="login">
+    <form @submit.prevent="handleLogin">
       <h1 class="text-3xl mb-5">Log In</h1>
       <fieldset class="flex flex-col gap-y-5">
         <div class="flex flex-col">
@@ -57,7 +39,7 @@ const login = async () => {
             type="email"
             class="border-[1px] border-solid border-gray-400 p-2"
             required
-            v-model="account.email"
+            v-model="currentAccount.email"
           />
         </div>
         <div class="flex flex-col">
@@ -66,7 +48,7 @@ const login = async () => {
             type="password"
             class="border-[1px] border-solid border-gray-400 p-2"
             required
-            v-model="account.password"
+            v-model="currentAccount.password"
           />
         </div>
       </fieldset>
