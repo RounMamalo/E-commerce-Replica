@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, reactive } from 'vue'
 import axios from 'axios'
+import router from '@/route'
 
 export const useProductStore = defineStore('products', () => {
   //data
   const products = ref([])
+  const userProducts = ref([])
   const product = reactive({
     id: "",
     name: "",
@@ -12,6 +14,7 @@ export const useProductStore = defineStore('products', () => {
     category: "",
     stock: 0,
     price: 0,
+    sellerId: ""
   });
   //functions
 
@@ -36,10 +39,28 @@ export const useProductStore = defineStore('products', () => {
       product.category = objectData.category;
       product.stock = objectData.stock;
       product.price = objectData.price;
+      product.sellerId = objectData.sellerId.userName;
 
       return product
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const addProduct = async(values) => {
+    try {
+      const newProduct = {
+      name: values.name,
+      description: values.description,
+      category: values.category,
+      price: values.price,
+      stock: values.stock,
+      sellerId: values.sellerId
+    };
+      const response = await axios.post("http://localhost:3000/product/", newProduct)
+
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -57,5 +78,5 @@ export const useProductStore = defineStore('products', () => {
     }
   }
 
-    return { product, products, getProducts, getProduct, deleteProduct }
+    return { product, products, getProducts, getProduct, addProduct, deleteProduct }
 })

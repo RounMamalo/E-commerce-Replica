@@ -1,8 +1,6 @@
 <script setup>
 import { reactive, defineProps, onMounted } from "vue";
 import { RouterLink } from "vue-router";
-import axios from "axios";
-import { useProductStore } from "@/stores/useProductStore";
 
 const product = reactive({
   id: "",
@@ -11,6 +9,7 @@ const product = reactive({
   category: "Default",
   stock: 0,
   price: 0,
+  sellerId: "",
 });
 
 const props = defineProps({
@@ -24,9 +23,12 @@ onMounted(() => {
   product.stock = props.product.stock;
   product.price = props.product.price;
   product.description = props.product.description;
+  if (props.product.sellerId) {
+    product.sellerId = props.product.sellerId.userName;
+  }
 });
 
-
+console.log(props.product);
 </script>
 <template>
   <div class="bg-white p-2 h-fit">
@@ -35,8 +37,11 @@ onMounted(() => {
         <h1 class="text-xl">{{ product.name }}</h1>
         <h2 class="text-2xl text-[#FF6F61]">{{ product.price }}</h2>
       </div>
-      <div class="body line-clamp-3">
+      <div class="body line-clamp-2">
         {{ product.description }}
+      </div>
+      <div class="mt-2 text-gray-500">
+        Seller {{ product.sellerId ? product.sellerId : "Uknown" }}
       </div>
     </RouterLink>
   </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { onMounted, reactive } from "vue";
+import { onMounted } from "vue";
 import { useProductStore } from "@/stores/useProductStore";
 
 const route = useRoute();
